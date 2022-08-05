@@ -2,7 +2,7 @@
 
 Resultados dos estudos da engine flame do flutter para desenvolvimento de jogos.
 
-## Getting Started
+## Resumo
 
 Objetivos criação básica de movimentação e tileset de um mapa com sprites 2d.
 
