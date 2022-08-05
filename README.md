@@ -4,13 +4,20 @@ rpgmap
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Resultados dos estudos da engine flame do flutter para desenvolvimento de jogos.
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+###To-do
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+[X] Executar o projeto exemplo do flame
+[X] Limpar o projeto
+[X] Adicionar o carregamento de imagem
+[X] Utilizar Sprites e animações
+[]  Alterar animação ao pressionar uma tecla
+[]  Movimentação WASD
+[]  Alterar movimentação de acordo com o sentido que está se movimentando
+[]  Movimentação joystick
+[]  Movimentação mouse click/tap
+[]  Carregamento de tiles para background
+[]  Criação de um tileset para o mapa
+[]  Colisões em certos tiles
