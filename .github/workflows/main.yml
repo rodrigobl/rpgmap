@@ -56,7 +56,7 @@ jobs:
         release_name: Release ${{ github.ref_name }}
         body: |
           ## Changelog (Commits)
-          {{ steps.gitlog.outputs.GIT_CHANGELOG }}
+          ${{ steps.gitlog.outputs.GIT_CHANGELOG }}
         draft: false
         prerelease: false
 
