@@ -36,7 +36,7 @@ jobs:
     - run: flutter build web --web-renderer html --base-href "/rpgmap/"
 
     # Zip generated flutter web files
-    - run: zip -r ${{ github.ref_name }}.zip .
+    - run: zip -r ${{ github.ref_name }}.zip ./build/web
 
     - name: Retrieve Tag Version
       run: |
