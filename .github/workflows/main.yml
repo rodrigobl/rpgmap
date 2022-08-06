@@ -1,4 +1,4 @@
-name: Flutter CD - APK
+name: Flutter CD - APK - WEB
 
 # This workflow is triggered on new tags sent to the repository.
 
@@ -37,8 +37,15 @@ jobs:
     # Build web
     - run: flutter build web --web-renderer html --base-href "/rpgmap/"
 
+    # Zip generated flutter web files
     - run: zip -r ${{ github.ref_name }}.zip ./build/web
 
+    - name: Retrieve version
+      run: |
+        echo "::set-output name=GIT_CHANGELOG::$(git log --no-merges --date=iso --pretty=format:"%ad %an: %s" $(git describe --abbrev=0 {{ github.ref_name }}^)...HEAD)"
+      id: gitlog
+
+    # Create Release with tag/branch name (ref_name)
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
@@ -47,9 +54,13 @@ jobs:
       with:
         tag_name: ${{ github.ref_name }}
         release_name: Release ${{ github.ref_name }}
+        body: |
+          ## Changelog (Commits)
+          {{ steps.gitlog.outputs.GIT_CHANGELOG }}
         draft: false
         prerelease: false
 
+    # Upload flutter apk built in the release
     - name: Upload Release Apk
       id: upload-release-asset-apk
       uses: actions/upload-release-asset@v1
@@ -61,6 +72,7 @@ jobs:
         asset_name: ${{ github.ref_name }}.apk
         asset_content_type: application/zip
 
+    # Upload flutter web zip built in the release
     - name: Upload Release Web.zip
       id: upload-release-asset-web
       uses: actions/upload-release-asset@v1
@@ -72,15 +84,10 @@ jobs:
         asset_name: ${{ github.ref_name }}.zip
         asset_content_type: application/zip
 
+    # Deploy in github branch
     - name: Deploy Web Github Pages
       uses: peaceiris/actions-gh-pages@v3
       if: true
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./build/web
-    
-    # Upload generated apk to the artifacts.
-    #- uses: actions/upload-artifact@v1
-    #  with:
-    #    name: ${{ github.ref_name }}
-    #    path: build/app/outputs/apk/release/app-release.apk
