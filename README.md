@@ -14,7 +14,7 @@ https://rodrigobl.github.io/rpgmap-release/
  - [X] Limpar o projeto
  - [X] Adicionar o carregamento de imagem
  - [X] Utilizar Sprites e animações
- - [ ]  Alterar animação ao pressionar uma tecla
+ - [X]  Alterar animação ao pressionar uma tecla
  - [ ]  Movimentação WASD
  - [ ]  Alterar movimentação de acordo com o sentido que está se movimentando
  - [ ]  Movimentação joystick
