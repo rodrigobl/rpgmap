@@ -17,7 +17,6 @@ enum PlayerState{
   idleLeft,
 }
 
-
 class MyGame extends FlameGame with TapDetector, KeyboardEvents {
 
   SpriteAnimationGroupComponent? playerAnimationComponent;
