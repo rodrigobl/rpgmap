@@ -35,7 +35,7 @@ jobs:
     - run: flutter build apk
 
     # Build web
-    - run: flutter build web --web-renderer html
+    - run: flutter build web --web-renderer html --base-href "/rpgmap/"
 
     - run: zip -r ${{ github.ref_name }}.zip ./build/web
 
