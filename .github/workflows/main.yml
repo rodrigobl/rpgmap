@@ -45,7 +45,12 @@ jobs:
 
     - name: Retrieve Git Log
       run: |
-        echo "::set-output name=GIT_CHANGELOG::$(cat << git log --no-merges --date=iso --pretty=format:"%ad %an: %s" ${{ steps.previousTagVersion.outputs.GIT_PREVIOUSTAG }}...HEAD)"
+        text="$(git log --no-merges --date=iso --pretty=format:"%ad %an: %s" ${{ steps.previousTagVersion.outputs.GIT_PREVIOUSTAG }}...HEAD)"
+        echo "$text"
+        text="${text//'%'/'%25'}"
+        text="${text//$'\n'/'%0A'}"
+        text="${text//$'\r'/'%0D'}"
+        echo "::set-output name=GIT_CHANGELOG::$text"
       id: gitLog
 
     # Create Release with tag/branch name (ref_name)
