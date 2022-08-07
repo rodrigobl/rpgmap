@@ -45,10 +45,9 @@ jobs:
 
     - name: Retrieve Git Log
       run: |
-        text="$(git log --no-merges --date=iso --pretty=format:"%ad %an: %s" ${{ steps.previousTagVersion.outputs.GIT_PREVIOUSTAG }}...HEAD)"
-        echo "$text"
+        text="$(git log --no-merges --date=short --pretty=format:"%ad @%an: %s" ${{ steps.previousTagVersion.outputs.GIT_PREVIOUSTAG }}...HEAD)"
         text="${text//'%'/'%25'}"
-        text="${text//$'\n'/'%0A'}"
+        text="${text//$'\n'/'%0A%0A - '}"
         text="${text//$'\r'/'%0D'}"
         echo "::set-output name=GIT_CHANGELOG::$text"
       id: gitLog
