@@ -45,7 +45,7 @@ jobs:
 
     - name: Retrieve Git Log
       run: |
-        text="$(git log --no-merges --date=short --pretty=format:"%ad @%an: %s" ${{ steps.previousTagVersion.outputs.GIT_PREVIOUSTAG }}...HEAD)"
+        text=" - $(git log --no-merges --date=short --pretty=format:"%ad @%an: %s" ${{ steps.previousTagVersion.outputs.GIT_PREVIOUSTAG }}...HEAD)"
         text="${text//'%'/'%25'}"
         text="${text//$'\n'/'%0A%0A - '}"
         text="${text//$'\r'/'%0D'}"
