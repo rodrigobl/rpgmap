@@ -45,11 +45,16 @@ jobs:
 
     - name: Retrieve Git Log
       run: |
-        text=" - $(git log --no-merges --date=short --pretty=format:"%ad @%an: %s" ${{ steps.previousTagVersion.outputs.GIT_PREVIOUSTAG }}...HEAD)"
+        text="$(git log --no-merges --date=short --pretty=format:" - **(%ad)** %H: _%s_" ${{ steps.previousTagVersion.outputs.GIT_PREVIOUSTAG }}...${{ github.ref_name }})"
+        text="${text//'%'/'%25'}"
+        text="${text//$'\n'/'%0A%0A'}"
+        text="${text//$'\r'/'%0D'}"
+        echo "::set-output name=GIT_CHANGELOG_COMMITS::$text"
+        text=" - $(git log --reverse --merges --oneline --grep='Merge pull request #' ${{ steps.previousTagVersion.outputs.GIT_PREVIOUSTAG }}...${{ github.ref_name }})"
         text="${text//'%'/'%25'}"
         text="${text//$'\n'/'%0A%0A - '}"
         text="${text//$'\r'/'%0D'}"
-        echo "::set-output name=GIT_CHANGELOG::$text"
+        echo "::set-output name=GIT_CHANGELOG_PULLREQUESTS::$text"
       id: gitLog
 
     # Create Release with tag/branch name (ref_name)
@@ -63,7 +68,10 @@ jobs:
         release_name: Release ${{ github.ref_name }}
         body: |
           ## **Changelog** (Commits) - https://github.com/rodrigobl/rpgmap/compare/${{ steps.previousTagVersion.outputs.GIT_PREVIOUSTAG }}...${{ github.ref_name }}
-          ${{ steps.gitLog.outputs.GIT_CHANGELOG }}
+          ${{ steps.gitLog.outputs.GIT_CHANGELOG_COMMITS }}
+
+          #**Pull Requests**
+          ${{ steps.gitLog.outputs.GIT_CHANGELOG_PULLREQUESTS }}
         draft: false
         prerelease: false
 
